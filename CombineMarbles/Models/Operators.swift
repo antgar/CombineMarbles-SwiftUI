@@ -17,4 +17,5 @@ enum Operator: String {
     case merge
     case append
     case dropFirst
+    case last
 }

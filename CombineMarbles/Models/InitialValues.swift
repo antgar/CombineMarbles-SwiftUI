@@ -87,6 +87,13 @@ extension Operator {
                 MarbleElementType(value: "3", color: .blue, time: 300),
                 MarbleElementType(value: "4", color: .yellow, time: 400)
                 ])
+        case .last:
+            return OperatorMarbleValues(line1: [
+                MarbleElementType(value: "1", color: .red, time: 100),
+                MarbleElementType(value: "2", color: .blue, time: 200),
+                MarbleElementType(value: "3", color: .blue, time: 300),
+                MarbleElementType(value: "4", color: .yellow, time: 400)
+                ])
         }
     }
     
@@ -106,6 +113,8 @@ extension Operator {
             return "a.append(b)"
         case .dropFirst:
             return "a.dropFirst(2)"
+        case .last:
+            return "a.last"
         }
     }
     
@@ -164,6 +173,10 @@ extension Operator {
             return Publishers.Sequence(sequence: initial.line1)
             .dropFirst(2)
             .eraseToAnyPublisher()
+        case .last:
+            return Publishers.Sequence(sequence: initial.line1)
+                .last()
+                .eraseToAnyPublisher()
         }
     }
 }
