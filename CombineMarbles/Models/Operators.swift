@@ -11,4 +11,5 @@ import SwiftUI
 
 enum Operator: String {
     case map
+    case collect
 }

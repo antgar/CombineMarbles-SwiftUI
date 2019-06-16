@@ -15,7 +15,7 @@ struct MarbleView: View {
         GeometryReader {geometry in
         ZStack(alignment: .leading) {
                 TimelineView()
-                HStack {
+                Group {
                     ForEach(self.values.identified(by: \.value)) {element in
                         CircleView(circleColor: element.color, title: element.value)
                             .padding(.bottom, 20)
