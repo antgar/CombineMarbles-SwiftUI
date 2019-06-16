@@ -26,13 +26,8 @@ final class DetailViewModel: BindableObject {
         initialValues = currentOperator.initial.line1
         text = currentOperator.transformText
         _ = currentOperator.transform()
-            .map {values in
-                values.enumerated().map {[unowned self] (index, element) in
-                    return MarbleElementType(value: String(element),
-                                             color: self.initialValues[index].color)
-                }
-            }.sink {[unowned self] elements in
-                self.result = elements
-        }
+            .sink(receiveValue: { value in
+                self.result.append(value)
+            })
     }
 }

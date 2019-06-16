@@ -10,16 +10,21 @@ import SwiftUI
 
 struct MarbleView: View {
     let values: [MarbleElementType]
+    private let maxTime: CGFloat = 1000.0
     var body: some View {
+        GeometryReader {geometry in
         ZStack(alignment: .leading) {
-            TimelineView()
-            HStack {
-                ForEach(values.identified(by: \.value)) {element in
-                    CircleView(circleColor: element.color, title: element.value)
-                        .padding([.bottom, .leading], 20)
+                TimelineView()
+                HStack {
+                    ForEach(self.values.identified(by: \.value)) {element in
+                        CircleView(circleColor: element.color, title: element.value)
+                            .padding(.bottom, 20)
+                            .offset(x: (geometry.size.width / self.maxTime) * element.time)
+                    }
                 }
-            }
-        }
+            }.fixedSize()
+        }.fixedSize(horizontal: false, vertical: true)
+        .padding([.top,.bottom], 30)
     }
 }
 
