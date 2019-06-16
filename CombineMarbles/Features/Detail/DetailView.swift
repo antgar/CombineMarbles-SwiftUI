@@ -13,6 +13,9 @@ struct DetailView : View {
     var body: some View {
         VStack(alignment: .center) {
             MarbleView(values: viewModel.initialValues)
+            if viewModel.initialValuesSecond != nil {
+                MarbleView(values: viewModel.initialValuesSecond!)
+            }
             Text(viewModel.text)
                 .font(.largeTitle)
             MarbleView(values: viewModel.result)

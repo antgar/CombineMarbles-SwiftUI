@@ -18,6 +18,12 @@ struct MarbleElementType {
 
 struct OperatorMarbleValues {
     let line1: [MarbleElementType]
+    let line2: [MarbleElementType]?
+    
+    init(line1: [MarbleElementType], line2: [MarbleElementType]? = nil) {
+        self.line1 = line1
+        self.line2 = line2
+    }
 }
 
 extension Operator {
@@ -53,6 +59,17 @@ extension Operator {
                 MarbleElementType(value: "2", color: .blue, time: 300),
                 MarbleElementType(value: "3", color: .black, time: 400)
                 ])
+        case .merge:
+            return OperatorMarbleValues(line1: [
+                MarbleElementType(value: "1", color: .red, time: 100),
+                MarbleElementType(value: "2", color: .blue, time: 200),
+                MarbleElementType(value: "20", color: .green, time: 400),
+                MarbleElementType(value: "300", color: .black, time: 600)
+                ], line2:
+                    [
+                        MarbleElementType(value: "800", color: .orange, time: 300),
+                        MarbleElementType(value: "55", color: .yellow, time: 500),
+                    ])
         }
     }
     
@@ -66,6 +83,8 @@ extension Operator {
             return "a.filter {$0 > 10}"
         case .removeDuplicates:
             return "a.removeDuplicates()"
+        case .merge:
+            return "Publishers.merge(a, b)"
         }
     }
     
@@ -110,6 +129,11 @@ extension Operator {
                     return MarbleElementType(value: "\(value)", color: currentColor,
                                              time: originalValue.time)
                 }.eraseToAnyPublisher()
+        case .merge:
+            let sequence1 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line1)
+            let sequence2 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line2!)
+            return Publishers.Merge(sequence1, sequence2)
+            .eraseToAnyPublisher()
         }
     }
 }

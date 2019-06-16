@@ -15,6 +15,7 @@ final class DetailViewModel: BindableObject {
     private let _didChange = PassthroughSubject<DetailViewModel, Never>()
     
     let initialValues: [MarbleElementType]
+    let initialValuesSecond: [MarbleElementType]?
     let text: String
     var result: [MarbleElementType] = [] {
         didSet {
@@ -26,10 +27,12 @@ final class DetailViewModel: BindableObject {
             _didChange.send(self)
         }
     }
+    
     init(currentOperator: Operator) {
         title = currentOperator.rawValue
         didChange = _didChange.eraseToAnyPublisher()
         initialValues = currentOperator.initial.line1
+        initialValuesSecond = currentOperator.initial.line2
         text = currentOperator.transformText
         _ = currentOperator.transform()
             .sink(receiveValue: { value in
