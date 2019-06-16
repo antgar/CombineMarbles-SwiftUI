@@ -21,7 +21,13 @@ final class DetailViewModel: BindableObject {
             _didChange.send(self)
         }
     }
+    private(set) var title = "" {
+        didSet {
+            _didChange.send(self)
+        }
+    }
     init(currentOperator: Operator) {
+        title = currentOperator.rawValue
         didChange = _didChange.eraseToAnyPublisher()
         initialValues = currentOperator.initial.line1
         text = currentOperator.transformText
