@@ -15,4 +15,6 @@ enum Operator: String {
     case filter
     case removeDuplicates
     case merge
+    case append
+    case dropFirst
 }

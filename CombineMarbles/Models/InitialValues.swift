@@ -70,6 +70,23 @@ extension Operator {
                         MarbleElementType(value: "800", color: .orange, time: 300),
                         MarbleElementType(value: "55", color: .yellow, time: 500),
                     ])
+        case .append:
+            return OperatorMarbleValues(line1: [
+                MarbleElementType(value: "1", color: .red, time: 100),
+                MarbleElementType(value: "2", color: .blue, time: 200),
+                MarbleElementType(value: "3", color: .green, time: 600),
+                ], line2:
+                [
+                    MarbleElementType(value: "5", color: .orange, time: 300),
+                    MarbleElementType(value: "5", color: .yellow, time: 500),
+                ])
+        case .dropFirst:
+            return OperatorMarbleValues(line1: [
+                MarbleElementType(value: "1", color: .red, time: 100),
+                MarbleElementType(value: "2", color: .blue, time: 200),
+                MarbleElementType(value: "3", color: .blue, time: 300),
+                MarbleElementType(value: "4", color: .yellow, time: 400)
+                ])
         }
     }
     
@@ -85,6 +102,10 @@ extension Operator {
             return "a.removeDuplicates()"
         case .merge:
             return "Publishers.merge(a, b)"
+        case .append:
+            return "a.append(b)"
+        case .dropFirst:
+            return "a.dropFirst(2)"
         }
     }
     
@@ -133,6 +154,15 @@ extension Operator {
             let sequence1 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line1)
             let sequence2 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line2!)
             return Publishers.Merge(sequence1, sequence2)
+            .eraseToAnyPublisher()
+        case .append:
+            let sequence1 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line1)
+            let sequence2 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line2!)
+            return sequence1.append(sequence2)
+            .eraseToAnyPublisher()
+        case .dropFirst:
+            return Publishers.Sequence(sequence: initial.line1)
+            .dropFirst(2)
             .eraseToAnyPublisher()
         }
     }
