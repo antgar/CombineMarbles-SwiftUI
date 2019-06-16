@@ -38,6 +38,14 @@ extension Operator {
                 MarbleElementType(value: "5", color: .black, time: 500),
                 MarbleElementType(value: "6", color: .black, time: 600)
                 ])
+        case .filter:
+            return OperatorMarbleValues(line1: [
+                MarbleElementType(value: "5", color: .red, time: 100),
+                MarbleElementType(value: "15", color: .blue, time: 200),
+                MarbleElementType(value: "20", color: .yellow, time: 300),
+                MarbleElementType(value: "1", color: .gray, time: 400),
+                MarbleElementType(value: "500", color: .orange, time: 500)
+                ])
         }
     }
     
@@ -47,6 +55,8 @@ extension Operator {
             return "map {$0 * 10}"
         case .collect:
             return "a.collect()"
+        case .filter:
+            return "a.filter {$0 > 10}"
         }
     }
     
@@ -70,6 +80,16 @@ extension Operator {
                     return MarbleElementType(value: "[\(values)]",
                                              color: .green,
                                              time: 600)
+            }.eraseToAnyPublisher()
+        case .filter:
+            let numberValues = initial.line1.map {Int($0.value)!}
+            return Publishers.Sequence(sequence: numberValues)
+                .filter {$0 > 10}
+                .map {value in
+                    let originalValue = initial.line1.first {String(value) == $0.value}!
+                    let currentColor = originalValue.color
+                    return MarbleElementType(value: "\(value)", color: currentColor,
+                                             time: originalValue.time)
             }.eraseToAnyPublisher()
         }
     }
