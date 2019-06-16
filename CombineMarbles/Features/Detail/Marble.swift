@@ -16,7 +16,7 @@ struct MarbleView: View {
         ZStack(alignment: .leading) {
                 TimelineView()
                 Group {
-                    ForEach(self.values.identified(by: \.value)) {element in
+                    ForEach(self.values.identified(by: \.time)) {element in
                         CircleView(circleColor: element.color, title: element.value)
                             .padding(.bottom, 20)
                             .offset(x: (geometry.size.width / self.maxTime) * element.time)
