@@ -14,9 +14,9 @@ struct TimelineView : View {
             Path(CGRect(x: 0,
                         y: 0,
                         width: geometry.size.width,
-                        height: 2))
+                        height: 1))
         }.padding()
-        .frame(height: 2)
+        .frame(height: 1)
     }
 }
 
