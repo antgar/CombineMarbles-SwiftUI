@@ -94,6 +94,15 @@ extension Operator {
                 MarbleElementType(value: "3", color: .blue, time: 300),
                 MarbleElementType(value: "4", color: .yellow, time: 400)
                 ])
+        case .zip:
+             return OperatorMarbleValues(line1: [
+                MarbleElementType(value: "1", color: .red, time: 100),
+                MarbleElementType(value: "2", color: .blue, time: 400),
+                MarbleElementType(value: "3", color: .orange, time: 800),
+                ], line2: [
+                    MarbleElementType(value: "A", color: .red, time: 200),
+                    MarbleElementType(value: "B", color: .blue, time: 600),
+                ])
         }
     }
     
@@ -115,6 +124,8 @@ extension Operator {
             return "a.dropFirst(2)"
         case .last:
             return "a.last"
+        case .zip:
+            return "Publishers.zip(a, b)"
         }
     }
     
@@ -177,6 +188,15 @@ extension Operator {
             return Publishers.Sequence(sequence: initial.line1)
                 .last()
                 .eraseToAnyPublisher()
+        case .zip:
+            let sequence1 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line1)
+            let sequence2 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line2!)
+            return Publishers.Zip(sequence1, sequence2)
+                .map {element1, element2 in
+                    return MarbleElementType(value: element1.value + element2.value,
+                                             color: .blue,
+                                             time: element2.time)
+            }.eraseToAnyPublisher()
         }
     }
 }

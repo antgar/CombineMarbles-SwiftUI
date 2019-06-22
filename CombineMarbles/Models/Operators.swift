@@ -18,4 +18,5 @@ enum Operator: String {
     case append
     case dropFirst
     case last
+    case zip
 }

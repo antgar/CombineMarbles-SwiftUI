@@ -28,7 +28,7 @@ final class OperatorsListViewModel: BindableObject {
     init() {
         didChange = _didChange.eraseToAnyPublisher()
         let combiningSection = OperatorSection(title: "Combining",
-                                               operators: [.append, .merge])
+                                               operators: [.append, .merge, .zip])
         let transformingSection = OperatorSection(title: "Mapping",
                                           operators: [.collect, .map])
         let filteringSection = OperatorSection(title: "Filtering",
