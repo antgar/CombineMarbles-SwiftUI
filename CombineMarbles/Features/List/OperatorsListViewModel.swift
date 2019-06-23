@@ -30,7 +30,7 @@ final class OperatorsListViewModel: BindableObject {
         let combiningSection = OperatorSection(title: "Combining",
                                                operators: [.append, .merge, .zip])
         let transformingSection = OperatorSection(title: "Mapping",
-                                          operators: [.collect, .map])
+                                          operators: [.collect, .map, .scan])
         let filteringSection = OperatorSection(title: "Filtering",
                                                   operators: [.dropFirst, .filter, .first, .last, .removeDuplicates])
         operators = [combiningSection, filteringSection, transformingSection]

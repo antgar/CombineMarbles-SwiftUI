@@ -110,6 +110,13 @@ extension Operator {
                     MarbleElementType(value: "A", color: .red, time: 200),
                     MarbleElementType(value: "B", color: .blue, time: 600),
                 ])
+        case .scan:
+            return OperatorMarbleValues(line1: [
+                MarbleElementType(value: "1", color: .red, time: 100),
+                MarbleElementType(value: "2", color: .blue, time: 200),
+                MarbleElementType(value: "3", color: .green, time: 300),
+                MarbleElementType(value: "4", color: .yellow, time: 400)
+                ])
         }
     }
     
@@ -135,6 +142,8 @@ extension Operator {
             return "a.first()"
         case .zip:
             return "Publishers.zip(a, b)"
+        case .scan:
+            return "a.scan(0) {$0 + $1}"
         }
     }
     
@@ -209,6 +218,17 @@ extension Operator {
                     return MarbleElementType(value: element1.value + element2.value,
                                              color: .blue,
                                              time: element2.time)
+            }.eraseToAnyPublisher()
+        case .scan:
+            return Publishers.Sequence(sequence: initial.line1)
+            .scan(MarbleElementType(value: "0",
+                                    color: .white,
+                                    time: 0)) {acc, e in
+                                        let a = Int(e.value)!
+                                        let b = Int(acc.value)!
+                                        return MarbleElementType(value: String(a + b),
+                                                                 color: e.color,
+                                                                 time: e.time)
             }.eraseToAnyPublisher()
         }
     }
