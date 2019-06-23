@@ -21,4 +21,5 @@ enum Operator: String {
     case first
     case zip
     case scan
+    case min
 }
