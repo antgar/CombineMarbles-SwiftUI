@@ -124,6 +124,13 @@ extension Operator {
                 MarbleElementType(value: "55", color: .green, time: 300),
                 MarbleElementType(value: "24", color: .yellow, time: 400)
                 ])
+        case .max:
+            return OperatorMarbleValues(line1: [
+                MarbleElementType(value: "300", color: .red, time: 100),
+                MarbleElementType(value: "5", color: .blue, time: 200),
+                MarbleElementType(value: "55", color: .green, time: 300),
+                MarbleElementType(value: "24", color: .yellow, time: 400)
+                ])
         case .count:
             return OperatorMarbleValues(line1: [
                 MarbleElementType(value: "300", color: .red, time: 100),
@@ -160,6 +167,8 @@ extension Operator {
             return "a.scan(0) {$0 + $1}"
         case .min:
             return "a.min()"
+        case .max:
+            return "a.max()"
         case .count:
             return "a.count()"
         }
@@ -258,6 +267,16 @@ extension Operator {
                                          color: originalValue.color,
                                          time: 400)
             }.eraseToAnyPublisher()
+        case .max:
+            let numberValues = initial.line1.map {Int($0.value)!}
+            return Publishers.Sequence(sequence: numberValues)
+                .max()
+                .map { value in
+                    let originalValue = initial.line1.first(where: {String(value) == $0.value})!
+                    return MarbleElementType(value: originalValue.value,
+                                             color: originalValue.color,
+                                             time: 400)
+                }.eraseToAnyPublisher()
         case .count:
             let numberValues = initial.line1.map {Int($0.value)!}
             return Publishers.Sequence(sequence: numberValues)
