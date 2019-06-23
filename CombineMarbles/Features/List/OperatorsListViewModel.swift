@@ -34,7 +34,7 @@ final class OperatorsListViewModel: BindableObject {
         let filteringSection = OperatorSection(title: "Filtering",
                                                   operators: [.dropFirst, .filter, .first, .last, .removeDuplicates])
         let mathSection = OperatorSection(title: "Mathematical",
-                                          operators: [.min])
+                                          operators: [.count, .min])
         operators = [combiningSection, filteringSection, transformingSection, mathSection]
     }
 }
