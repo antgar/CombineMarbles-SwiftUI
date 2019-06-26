@@ -12,7 +12,7 @@ Combine is a new library for composing asynchronous events over time (Rx-Like).
 - [ ] Implement all operators available
 - [ ] Interactive Diagrams
 - [ ] Description of the operator in the detail view
-- [ ] Catalyst
+- [x] Catalyst
 
 and many more!
 
