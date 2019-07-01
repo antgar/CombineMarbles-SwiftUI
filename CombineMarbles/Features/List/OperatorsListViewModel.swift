@@ -28,11 +28,13 @@ final class OperatorsListViewModel: BindableObject {
     init() {
         didChange = _didChange.eraseToAnyPublisher()
         let combiningSection = OperatorSection(title: "Combining",
-                                               operators: [.append, .merge])
+                                               operators: [.append, .merge, .zip])
         let transformingSection = OperatorSection(title: "Mapping",
-                                          operators: [.collect, .map])
+                                          operators: [.collect, .map, .scan])
         let filteringSection = OperatorSection(title: "Filtering",
-                                                  operators: [.dropFirst, .filter, .last, .removeDuplicates])
-        operators = [combiningSection, filteringSection, transformingSection]
+                                                  operators: [.dropFirst, .filter, .first, .last, .removeDuplicates])
+        let mathSection = OperatorSection(title: "Mathematical",
+                                          operators: [.count, .max, .min])
+        operators = [combiningSection, filteringSection, transformingSection, mathSection]
     }
 }

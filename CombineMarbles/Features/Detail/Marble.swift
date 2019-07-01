@@ -13,9 +13,9 @@ struct MarbleView: View {
     private let maxTime: CGFloat = 1000.0
     var body: some View {
         GeometryReader {geometry in
-        ZStack(alignment: .leading) {
+            ZStack(alignment: .leading) {
                 TimelineView()
-            .padding([.leading, .trailing])
+                    .padding([.leading, .trailing])
                 Group {
                     ForEach(self.values.identified(by: \.time)) {element in
                         CircleView(circleColor: element.color, title: element.value)
@@ -23,9 +23,9 @@ struct MarbleView: View {
                             .offset(x: (geometry.size.width / self.maxTime) * element.time)
                     }
                 }
-            }.fixedSize()
-        }.fixedSize(horizontal: false, vertical: true)
-        .padding([.top,.bottom], 30)
+                }.fixedSize()
+            }.fixedSize(horizontal: false, vertical: true)
+            .padding([.top,.bottom], 30)
     }
 }
 
