@@ -11,9 +11,22 @@ import SwiftUI
 import Combine
 
 struct MarbleElementType {
+    enum Shape {
+        case circle
+        case square
+    }
+    
     let value: String
     let color: Color
     let time: CGFloat
+    let shape: Shape
+    
+    init(value: String, color: Color, time: CGFloat, shape: Shape = .circle) {
+        self.value = value
+        self.color = color
+        self.time = time
+        self.shape = shape
+    }
 }
 
 struct OperatorMarbleValues {
@@ -117,6 +130,14 @@ extension Operator {
                 MarbleElementType(value: "3", color: .green, time: 300),
                 MarbleElementType(value: "4", color: .yellow, time: 400)
                 ])
+        case .flatMap:
+            return OperatorMarbleValues(line1: [
+                MarbleElementType(value: "1", color: .red, time: 100),
+                MarbleElementType(value: "2", color: .blue, time: 400),
+                MarbleElementType(value: "3", color: .green, time: 700)
+                ], line2: [
+                    MarbleElementType(value: "1", color: .gray, time: 100, shape: .square),
+                    MarbleElementType(value: "2", color: .gray, time: 200, shape: .square)])
         case .min:
             return OperatorMarbleValues(line1: [
                 MarbleElementType(value: "300", color: .red, time: 100),
@@ -165,6 +186,8 @@ extension Operator {
             return "Publishers.zip(a, b)"
         case .scan:
             return "a.scan(0) {$0 + $1}"
+        case .flatMap:
+            return "a.flatMap(b)"
         case .min:
             return "a.min()"
         case .max:
@@ -256,6 +279,19 @@ extension Operator {
                                         return MarbleElementType(value: String(a + b),
                                                                  color: e.color,
                                                                  time: e.time)
+            }.eraseToAnyPublisher()
+        case .flatMap:
+            let sequence1 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line1)
+            let sequence2 = Publishers.Sequence<[MarbleElementType], Error>(sequence: initial.line2!)
+            
+            return sequence1
+                .flatMap { e1 in
+                    sequence2.map { e2 in
+                        MarbleElementType(value: e2.value,
+                                          color: e1.color,
+                                          time: e2.time + e1.time - 100,
+                                          shape: .square)
+                    }
             }.eraseToAnyPublisher()
         case .min:
             let numberValues = initial.line1.map {Int($0.value)!}
