@@ -17,6 +17,9 @@ final class DetailViewModel: BindableObject {
     let initialValues: [MarbleElementType]
     let initialValuesSecond: [MarbleElementType]?
     let text: String
+
+    let description: String
+
     var result: [MarbleElementType] = [] {
         didSet {
             _didChange.send(self)
@@ -34,6 +37,7 @@ final class DetailViewModel: BindableObject {
         initialValues = currentOperator.initial.line1
         initialValuesSecond = currentOperator.initial.line2
         text = currentOperator.transformText
+        description = currentOperator.description
         _ = currentOperator.transform()
             .sink(receiveValue: { value in
                 self.result.append(value)

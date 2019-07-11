@@ -26,3 +26,41 @@ enum Operator: String {
     case max
     case count
 }
+
+extension Operator {
+    var description: String {
+        switch self {
+
+        case .map:
+            return "Applies a transformation to each element in a stream."
+        case .collect:
+            return "Waits until a stream is finished, then publishes all its elements in an array."
+        case .filter:
+            return "Only forwards elements that satisfy the given condition."
+        case .removeDuplicates:
+            return "Removes elements from the stream that match the previous element."
+        case .merge:
+            return "Publishes elements from two (or more) streams as a single stream."
+        case .append:
+            return "Publishes all elements from the first stream, then publishes from the second stream."
+        case .dropFirst:
+            return "Skips the first N elements in a stream."
+        case .last:
+            return "Publishes the final element of a stream on completion."
+        case .first:
+            return "Publishes the first element of a stream, then finishes."
+        case .zip:
+            return "Combines every element from each stream into tuples."
+        case .scan:
+            return "Reduces the elements of the stream, publishing each partial result."
+        case .flatMap:
+            return "Generates a new publisher for each element of a stream."
+        case .min:
+            return "Upon completion, publishes the lowest value in the stream."
+        case .max:
+            return "Upon completion, publishes the greatest value in the stream."
+        case .count:
+            return "Upon completion, publishes the total number of values it received."
+        }
+    }
+}
