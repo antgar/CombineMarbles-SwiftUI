@@ -10,8 +10,11 @@ import SwiftUI
 
 struct CircleView : View {
     private let width: CGFloat = 20
-    var circleColor: Color
+    var color: Color
     var title: String
+
+    @Environment(\.colorScheme) var scheme
+
     var body: some View {
         VStack(spacing: 2) {
             Text(title)
@@ -19,7 +22,7 @@ struct CircleView : View {
                                    y: 0,
                                    width: width,
                                    height: width))
-                .foregroundColor(circleColor)
+                .foregroundColor(color.modifiedForScheme(scheme))
                 .frame(width: 20, height: 20, alignment: .center)
         }
     }
@@ -28,7 +31,7 @@ struct CircleView : View {
 #if DEBUG
 struct CircleView_Previews : PreviewProvider {
     static var previews: some View {
-        CircleView(circleColor: Color.red, title: "1")
+        CircleView(color: Color.red, title: "1")
     }
 }
 #endif
