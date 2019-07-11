@@ -25,7 +25,10 @@ struct OperatorList: View {
             ForEach(sections.identified(by: \.title)) {section in
                 Section(header: Text(section.title)) {
                     ForEach(section.operators.identified(by: \.self)) {currentOperator in
-                        NavigationButton(destination: DetailView(viewModel: DetailViewModel(currentOperator: currentOperator))) {
+                        NavigationLink(destination:
+                            DetailView(viewModel:
+                                DetailViewModel(currentOperator: currentOperator)))
+                        {
                                 OperatorRow(currentOperator)
                         }
                     }
