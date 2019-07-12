@@ -19,6 +19,9 @@ struct DetailView : View {
             Text(viewModel.text)
                 .font(.largeTitle)
             MarbleView(values: viewModel.result)
+            Text(viewModel.description)
+                .padding()
+                .lineLimit(nil)
         }.navigationBarTitle(Text(viewModel.title))
     }
 }

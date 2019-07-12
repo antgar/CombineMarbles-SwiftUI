@@ -33,12 +33,12 @@ struct MarbleView: View {
         
         switch element.shape {
         case .circle:
-            return AnyView(CircleView(circleColor: element.color,
+            return AnyView(CircleView(color: element.color,
                        title: element.value)
                 .modifier(ShapeModifier(offset: offset))
             )
         case .square:
-            return AnyView(SquareView(circleColor: element.color,
+            return AnyView(SquareView(color: element.color,
                                       title: element.value)
                 .modifier(ShapeModifier(offset: offset))
             )

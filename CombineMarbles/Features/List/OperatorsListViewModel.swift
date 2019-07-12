@@ -16,17 +16,15 @@ struct OperatorSection {
 }
 
 final class OperatorsListViewModel: BindableObject {
-    let didChange: AnyPublisher<OperatorsListViewModel, Never>
-    private let _didChange = PassthroughSubject<OperatorsListViewModel, Never>()
-    
+    let didChange = PassthroughSubject<OperatorsListViewModel, Never>()
+
     private(set) var operators: [OperatorSection] = [] {
         didSet {
-            _didChange.send(self)
+            didChange.send(self)
         }
     }
     
     init() {
-        didChange = _didChange.eraseToAnyPublisher()
         let combiningSection = OperatorSection(title: "Combining",
                                                operators: [.append, .merge, .zip])
         let transformingSection = OperatorSection(title: "Transforming",

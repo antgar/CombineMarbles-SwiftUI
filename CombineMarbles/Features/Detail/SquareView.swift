@@ -10,14 +10,16 @@ import SwiftUI
 
 struct SquareView : View {
     private let width: CGFloat = 20
-    let circleColor: Color
+    let color: Color
     let title: String
+
+    @Environment(\.colorScheme) var scheme
     
     var body: some View {
         VStack(spacing: 2) {
             Text(title)
             Path(CGRect(x: 0, y: 0, width: width, height: width))
-                .foregroundColor(circleColor)
+                .foregroundColor(color.modifiedForScheme(scheme))
                 .frame(width: width, height: width, alignment: .center)
         }
         
@@ -27,7 +29,7 @@ struct SquareView : View {
 #if DEBUG
 struct SquareView_Previews : PreviewProvider {
     static var previews: some View {
-        SquareView(circleColor: .red, title: "1")
+        SquareView(color: .red, title: "1")
     }
 }
 #endif

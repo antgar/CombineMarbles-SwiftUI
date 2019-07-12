@@ -15,12 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        #if targetEnvironment(UIKitForMac)
-            let windowScene = UIWindowScene(session: session, connectionOptions: connectionOptions)
-            let window = UIWindow(windowScene: windowScene)
-        #else
-            let window = UIWindow(frame: UIScreen.main.bounds)
-        #endif
+        guard let windowScene = scene as? UIWindowScene else { fatalError() }
+        let window = UIWindow(windowScene: windowScene)
         window.rootViewController = UIHostingController(rootView: OperatorsListView(viewModel: OperatorsListViewModel()))
         self.window = window
         window.makeKeyAndVisible()
